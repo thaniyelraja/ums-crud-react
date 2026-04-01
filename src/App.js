@@ -20,7 +20,7 @@ function App() {
       .then(data => setUsers(data));
   };
 
-  // Get user by ID (ONLY for display, no autofill)
+  // Get user by ID
   const getUser = () => {
     fetch(`https://ums-crud-springboot-jdbc-production.up.railway.app/getUser/${id}`)
       .then(res => res.text())
@@ -32,6 +32,9 @@ function App() {
           alert(data);
           setUsers([]);
         }
+
+        // 🔥 clear ID field
+        setId("");
       });
   };
 
@@ -57,7 +60,14 @@ function App() {
       body: JSON.stringify({ name, email, age })
     })
       .then(res => res.text())
-      .then(msg => alert(msg));
+      .then(msg => {
+        alert(msg);
+
+        // 🔥 clear fields
+        setName("");
+        setEmail("");
+        setAge("");
+      });
   };
 
   // Update user
@@ -84,9 +94,9 @@ function App() {
 
       {/* Add User */}
       <h3>Add User</h3>
-      <input placeholder="Name" onChange={(e) => setName(e.target.value)} />
-      <input placeholder="Email" onChange={(e) => setEmail(e.target.value)} />
-      <input type="number" placeholder="Age" onChange={(e) => setAge(e.target.value)} />
+      <input value={name} placeholder="Name" onChange={(e) => setName(e.target.value)} />
+      <input value={email} placeholder="Email" onChange={(e) => setEmail(e.target.value)} />
+      <input value={age} type="number" placeholder="Age" onChange={(e) => setAge(e.target.value)} />
       <button onClick={addUser}>Add User</button>
 
       {/* Get User */}
