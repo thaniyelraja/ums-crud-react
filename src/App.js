@@ -51,22 +51,22 @@ function App() {
       cursor: "pointer"
     },
     tableWrapper: {
-      overflowX: "auto"
+      overflowX: "auto",
+      width: "100%"
     },
     table: {
       width: "100%",
-      minWidth: "600px",
       borderCollapse: "collapse"
     },
     th: {
       background: "#f1f5f9",
-      padding: "8px",
-      fontSize: "14px"
+      padding: "6px",
+      fontSize: "12px"
     },
     td: {
-      padding: "8px",
+      padding: "6px",
       textAlign: "center",
-      fontSize: "13px"
+      fontSize: "12px"
     }
   };
 
@@ -84,13 +84,20 @@ function App() {
 
   const getAllUsers = () => {
     fetch("https://ums-crud-springboot-jdbc-production.up.railway.app/getAllUsers")
-      .then(res => res.json())
-      .then(data => setUsers(data));
+      .then(res => {
+        if (!res.ok) throw new Error("Failed to fetch");
+        return res.json();
+      })
+      .then(data => setUsers(data))
+      .catch(err => alert("Error: " + err.message));
   };
 
   const getUser = () => {
     fetch(`https://ums-crud-springboot-jdbc-production.up.railway.app/getUser/${id}`)
-      .then(res => res.text())
+      .then(res => {
+        if (!res.ok) throw new Error("Failed");
+        return res.text();
+      })
       .then(data => {
         try {
           const user = JSON.parse(data);
@@ -100,18 +107,23 @@ function App() {
           setUsers([]);
         }
         setId("");
-      });
+      })
+      .catch(err => alert("Error: " + err.message));
   };
 
   const deleteUser = (id) => {
     fetch(`https://ums-crud-springboot-jdbc-production.up.railway.app/deleteUser/${id}`, {
       method: "DELETE"
     })
-      .then(res => res.text())
+      .then(res => {
+        if (!res.ok) throw new Error("Delete failed");
+        return res.text();
+      })
       .then(msg => {
         alert(msg);
         getAllUsers();
-      });
+      })
+      .catch(err => alert("Error: " + err.message));
   };
 
   const addUser = () => {
@@ -122,13 +134,17 @@ function App() {
       },
       body: JSON.stringify({ name, email, age })
     })
-      .then(res => res.text())
+      .then(res => {
+        if (!res.ok) throw new Error("Add failed");
+        return res.text();
+      })
       .then(msg => {
         alert(msg);
         setName("");
         setEmail("");
         setAge("");
-      });
+      })
+      .catch(err => alert("Error: " + err.message));
   };
 
   const updateUser = () => {
@@ -144,8 +160,12 @@ function App() {
         age: editAge
       })
     })
-      .then(res => res.text())
-      .then(msg => alert(msg));
+      .then(res => {
+        if (!res.ok) throw new Error("Update failed");
+        return res.text();
+      })
+      .then(msg => alert(msg))
+      .catch(err => alert("Error: " + err.message));
   };
 
   return (
