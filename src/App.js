@@ -15,14 +15,14 @@ function App() {
 
   // Show all users
   const getAllUsers = () => {
-    fetch("http://localhost:8080/getAllUsers")
+    fetch("https://ums-crud-springboot-jdbc-production.up.railway.app/getAllUsers")
       .then(res => res.json())
       .then(data => setUsers(data));
   };
 
   // Get user by ID (ONLY for display, no autofill)
   const getUser = () => {
-    fetch(`http://localhost:8080/getUser/${id}`)
+    fetch(`https://ums-crud-springboot-jdbc-production.up.railway.app/getUser/${id}`)
       .then(res => res.text())
       .then(data => {
         try {
@@ -37,7 +37,7 @@ function App() {
 
   // Delete user
   const deleteUser = (id) => {
-    fetch(`http://localhost:8080/deleteUser/${id}`, {
+    fetch(`https://ums-crud-springboot-jdbc-production.up.railway.app/deleteUser/${id}`, {
       method: "DELETE"
     })
       .then(res => res.text())
@@ -49,7 +49,7 @@ function App() {
 
   // Add user
   const addUser = () => {
-    fetch("http://localhost:8080/addUser", {
+    fetch("https://ums-crud-springboot-jdbc-production.up.railway.app/addUser", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -62,7 +62,7 @@ function App() {
 
   // Update user
   const updateUser = () => {
-    fetch("http://localhost:8080/updateUser", {
+    fetch("https://ums-crud-springboot-jdbc-production.up.railway.app/updateUser", {
       method: "PUT",
       headers: {
         "Content-Type": "application/json"
@@ -108,39 +108,36 @@ function App() {
       {/* Update User */}
       <h3>Update User</h3>
 
-      {/* 🔥 AUTO-FILL LOGIC HERE */}
-<input
-  placeholder="ID"
-  value={editId}
-  onChange={(e) => {
-    const value = e.target.value;
-    setEditId(value);
+      <input
+        placeholder="ID"
+        value={editId}
+        onChange={(e) => {
+          const value = e.target.value;
+          setEditId(value);
 
-    // 🔥 if ID is empty → clear fields
-    if (!value) {
-      setEditName("");
-      setEditEmail("");
-      setEditAge("");
-      return;
-    }
+          if (!value) {
+            setEditName("");
+            setEditEmail("");
+            setEditAge("");
+            return;
+          }
 
-    // 🔥 fetch if ID exists
-    fetch(`http://localhost:8080/getUser/${value}`)
-      .then(res => res.text())
-      .then(data => {
-        try {
-          const user = JSON.parse(data);
-          setEditName(user.name);
-          setEditEmail(user.email);
-          setEditAge(user.age);
-        } catch {
-          setEditName("");
-          setEditEmail("");
-          setEditAge("");
-        }
-      });
-  }}
-/>
+          fetch(`https://ums-crud-springboot-jdbc-production.up.railway.app/getUser/${value}`)
+            .then(res => res.text())
+            .then(data => {
+              try {
+                const user = JSON.parse(data);
+                setEditName(user.name);
+                setEditEmail(user.email);
+                setEditAge(user.age);
+              } catch {
+                setEditName("");
+                setEditEmail("");
+                setEditAge("");
+              }
+            });
+        }}
+      />
 
       <input
         placeholder="Name"
