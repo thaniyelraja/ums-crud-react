@@ -7,14 +7,21 @@ function App() {
       fontFamily: "Segoe UI, sans-serif",
       background: "linear-gradient(to right, #eef2f7, #f8fbff)",
       minHeight: "100vh",
-      padding: "20px"
+      padding: "10px",
+      maxWidth: "900px",
+      margin: "auto"
+    },
+    title: {
+      textAlign: "center",
+      marginBottom: "15px",
+      fontSize: "24px"
     },
     card: {
       background: "#ffffff",
-      padding: "20px",
-      marginBottom: "20px",
-      borderRadius: "12px",
-      boxShadow: "0 4px 12px rgba(0,0,0,0.08)"
+      padding: "15px",
+      marginBottom: "15px",
+      borderRadius: "10px",
+      boxShadow: "0 3px 10px rgba(0,0,0,0.06)"
     },
     input: {
       display: "block",
@@ -22,16 +29,18 @@ function App() {
       padding: "10px",
       marginBottom: "10px",
       borderRadius: "6px",
-      border: "1px solid #ddd"
+      border: "1px solid #ddd",
+      fontSize: "14px"
     },
     button: {
-      padding: "8px 14px",
+      padding: "10px",
+      width: "100%",
       border: "none",
       borderRadius: "6px",
       cursor: "pointer",
-      marginRight: "8px",
       background: "#4f8cff",
-      color: "#fff"
+      color: "#fff",
+      fontSize: "14px"
     },
     deleteBtn: {
       background: "#ff5c5c",
@@ -41,21 +50,23 @@ function App() {
       borderRadius: "6px",
       cursor: "pointer"
     },
+    tableWrapper: {
+      overflowX: "auto"
+    },
     table: {
       width: "100%",
+      minWidth: "600px",
       borderCollapse: "collapse"
     },
     th: {
       background: "#f1f5f9",
-      padding: "10px"
+      padding: "8px",
+      fontSize: "14px"
     },
     td: {
-      padding: "10px",
-      textAlign: "center"
-    },
-    title: {
+      padding: "8px",
       textAlign: "center",
-      marginBottom: "20px"
+      fontSize: "13px"
     }
   };
 
@@ -171,30 +182,36 @@ function App() {
 
       <div style={styles.card}>
         <h3>Users List</h3>
-        <table style={styles.table}>
-          <thead>
-            <tr>
-              <th style={styles.th}>S.No</th>
-              <th style={styles.th}>ID</th>
-              <th style={styles.th}>Name</th>
-              <th style={styles.th}>Email</th>
-              <th style={styles.th}>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {users.map((u, index) => (
-              <tr key={u.id}>
-                <td style={styles.td}>{index + 1}</td>
-                <td style={styles.td}>{u.id}</td>
-                <td style={styles.td}>{u.name}</td>
-                <td style={styles.td}>{u.email}</td>
-                <td style={styles.td}>
-                  <button style={styles.deleteBtn} onClick={() => deleteUser(u.id)}>Delete</button>
-                </td>
+
+        <div style={styles.tableWrapper}>
+          <table style={styles.table}>
+            <thead>
+              <tr>
+                <th style={styles.th}>S.No</th>
+                <th style={styles.th}>ID</th>
+                <th style={styles.th}>Name</th>
+                <th style={styles.th}>Email</th>
+                <th style={styles.th}>Action</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+
+            <tbody>
+              {users.map((u, index) => (
+                <tr key={u.id}>
+                  <td style={styles.td}>{index + 1}</td>
+                  <td style={styles.td}>{u.id}</td>
+                  <td style={styles.td}>{u.name}</td>
+                  <td style={styles.td}>{u.email}</td>
+                  <td style={styles.td}>
+                    <button style={styles.deleteBtn} onClick={() => deleteUser(u.id)}>Delete</button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+
+          </table>
+        </div>
+
       </div>
     </div>
   );
